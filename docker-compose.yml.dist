@@ -1,0 +1,33 @@
+version: '3.1'
+
+services:
+
+  wop:
+    image: wordpress
+    user: "1000"
+    restart: always
+    ports:
+      - 8080:80
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: clemens
+      WORDPRESS_DB_PASSWORD: clemens
+      WORDPRESS_DB_NAME: clemens
+    volumes:
+      - ./php:/usr/local/etc/php
+      - ./html:/var/www/html
+  db:
+    image: mysql:5.7
+    restart: always
+    ports: 
+      - 33060:33060
+    environment:
+      MYSQL_DATABASE: clemens
+      MYSQL_USER: clemens
+      MYSQL_PASSWORD: clemens
+      MYSQL_RANDOM_ROOT_PASSWORD: '1'
+    volumes:
+      - db-__SITENAME__:/var/lib/mysql
+
+volumes:
+  db-__SITENAME__:

@@ -1,0 +1,17 @@
+#!/usr/bin/zsh
+
+source ./config
+
+if [ -z $SITENAME ]; then
+  echo "SITENAME is mandatory. Please configure config."
+  exit 1;
+fi
+
+echo -n  "Initializing html volume: "
+id=$(docker run -d $WP_IMAGE)
+seq 10|while read s; do sleep 0.5; echo -n '*'; done; echo " done";
+docker cp $id:/var/www/html ./ > /dev/null 2>&1
+docker kill $id > /dev/null 2>&1
+docker rm -v $id > /dev/null 2>&1
+
+echo "Initializing docker-compose.yml"
