@@ -15,3 +15,11 @@ docker kill $id > /dev/null 2>&1
 docker rm -v $id > /dev/null 2>&1
 
 echo "Initializing docker-compose.yml"
+
+if [ $(basename $(pwd)) = "wordpress-template" ]; 
+then 
+	echo "Do not prune dir: We are the original template."; 
+else 
+	echo "Prune dir"; 
+	rm -rf .git; 
+fi
